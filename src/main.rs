@@ -16,7 +16,44 @@ impl fmt::Display for Structure {
 }
 
 #[derive(Debug)]
-struct StructureDebug(i32);
+struct MinMax(i64, i64);
+
+// Implement `Display` for `MinMax`.
+impl fmt::Display for MinMax {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        // Use `self.number` to refer to each positional data point.
+        write!(f, "({}, {})", self.0, self.1)
+    }
+}
+
+// Define a structure where the fields are nameable for comparison.
+#[derive(Debug)]
+struct Point2D {
+    x: f64,
+    y: f64,
+}
+
+// Similarly, implement `Display` for `Point2D`.
+impl fmt::Display for Point2D {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        // Customize so only `x` and `y` are denoted.
+        write!(f, "x: {}, y: {}", self.x, self.y)
+    }
+}
+
+#[derive(Debug)]
+struct Complex {
+    real: f64,
+    imag: f64,
+}
+
+// Similarly, implement `Display` for `Complex`.
+impl fmt::Display for Complex {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        // Customize so only `x` and `y` are denoted.
+        write!(f, "{0} + {1}i", self.real, self.imag)
+    }
+}
 
 
 fn main() {
@@ -58,6 +95,33 @@ Como ves, se pueden usar argumentos posicionales o con nombres x_2 = {1} and x_1
     	actor="actor"
     );
 
-    println!("Esto es un test con fmt implementado {0}", Structure(77));
-    println!("Esto es otro test usando Debug {0:?}", StructureDebug(88));
+    
+    println!("----------------------------------");
+    println!("------------- Display ------------");
+    println!("----------------------------------");
+    
+    println!("Compare structures:");
+    let minmax = MinMax(0, 14);
+    println!("Display: {}", minmax);
+    println!("Debug: {:?}", minmax);
+
+    let big_range =   MinMax(-300, 300);
+    let small_range = MinMax(-3, 3);
+
+    println!("The big range is {big} and the small is {small}",
+             small = small_range,
+             big = big_range);
+
+    let point = Point2D { x: 3.3, y: 7.2 };
+
+    println!("Compare points:");
+    println!("Display: {}", point);
+    println!("Debug: {:?}", point);
+
+    let z = Complex { real: 3.3, imag: 7.2 };
+
+    println!("Compare points:");
+    println!("Display: {}", z);
+    println!("Debug: {:?}", z);
+
 }
