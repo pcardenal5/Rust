@@ -1,5 +1,24 @@
+// Import the `fmt` module to make it available.
+use std::fmt;
 
-// This is the main function.
+struct Structure(i32);
+
+impl fmt::Display for Structure {
+
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		/*
+		Se escribe el primer elemento de la estructura al stream de salida, `f`.
+		Devuelve un `fmt::Result` que indicará si la operación ha fallado o no
+		*/
+		
+		write!(f, "{}", self.0)
+	}
+}
+
+#[derive(Debug)]
+struct StructureDebug(i32);
+
+
 fn main() {
 
     let x : i16 = 5 + 90 + 5;
@@ -16,7 +35,6 @@ Como ves, se pueden usar argumentos posicionales o con nombres x_2 = {1} and x_1
     // Se puede dar formato usando caracteres despues de `:`
     println!("Base 10:               {}",   69420); 
     println!("Base 2 (binary):       {:b}", 69420); 
-    println!("Base 8 (octal):        {:o}", 69420); 
     println!("Base 16 (hexadecimal): {:x}", 69420); 
     // You can right-justify text with a specified width. This will
     // output "    1". (Four white spaces and a "1", for a total width of 5.)
@@ -39,4 +57,7 @@ Como ves, se pueden usar argumentos posicionales o con nombres x_2 = {1} and x_1
     	"José",
     	actor="actor"
     );
+
+    println!("Esto es un test con fmt implementado {0}", Structure(77));
+    println!("Esto es otro test usando Debug {0:?}", StructureDebug(88));
 }
