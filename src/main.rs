@@ -50,8 +50,8 @@ struct Complex {
 // Similarly, implement `Display` for `Complex`.
 impl fmt::Display for Complex {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        // Customize so only `x` and `y` are denoted.
-        write!(f, "{0} + {1}i", self.real, self.imag)
+        let sign = if self.imag < 0.0 { "" } else {"+"};
+        write!(f, "{0} {2}{1}i", self.real, self.imag, sign)
     }
 }
 
