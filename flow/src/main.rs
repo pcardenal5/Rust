@@ -5,6 +5,7 @@ Tasks:
     - Print the lyrics to the Christmas carol “The Twelve Days of Christmas,” taking advantage of the repetition in the song.
 */
 #![allow(non_snake_case)]
+use std::collections::HashMap;
 use std::io;
 
 fn main() {
@@ -58,18 +59,32 @@ fn fibonacciHandler(){
         .read_line(&mut fiboN)
         .expect("No se ha podido leer la línea");
     
-    let fiboN: u64 =  fiboN.trim().parse().expect("Por favor, introduzca un número");
+    let fiboN: u128 =  fiboN.trim().parse().expect("Por favor, introduzca un número");
 
-    let fiboNum: u64  = fibo(fiboN);
+    let previous = HashMap::new();
+    let fiboTuple: (u128, HashMap<u128,u128>)  = fibo(fiboN, previous);
+    let fiboNum = fiboTuple.1.get(&fiboN).expect("Error al obtener la variable");
     println!("El número de fibonacci en la posición {fiboN} es {fiboNum}");
 
 }
 
-// Terrible implementation, but it's not the point of the program
-fn fibo(n:u64) -> u64{
+fn fibo(n: u128, previous: HashMap<u128,u128> ) -> (u128, HashMap<u128, u128>){
     if n > 2{
-        fibo(n-1) + fibo(n-2)
-    } else{
-        1
+        if previous.contains_key(&n){
+            return (n, previous);
+        } else{
+            let fN2 = fibo(n-2, previous);
+            let fN1 = fibo(n-1, fN2.1);
+            let fN: u128 = fN1.1.get(&(n-1)).expect("No existe el elemento") + fN1.1.get(&(n-2)).expect("No existe el elemento");
+            let mut previous = fN1.1;
+            previous.insert(n, fN);
+            return (n, previous);
+        }
+
+    } else {
+        let mut initialMap: HashMap<u128, u128> = HashMap::new();
+        initialMap.insert(1, 1);
+        initialMap.insert(2, 1);
+        return (1, initialMap);
     }
 }
