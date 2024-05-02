@@ -51,28 +51,31 @@ fn farenheitToCelsius(fDegrees:f64) -> f64{
 
 
 fn fibonacciHandler(){
-    println!("Introduzca el número de fibonacci que desea obtener:");
+    // println!("Introduzca el número de fibonacci que desea obtener:");
+    let mut previous = HashMap::new();
+    for i in 1..185 {
+        let fiboN : u128 = i; 
 
-    let mut fiboN = String::new();
-
-    io::stdin()
-        .read_line(&mut fiboN)
-        .expect("No se ha podido leer la línea");
+        let fiboTuple: (u128, HashMap<u128,u128>)  = fibo(fiboN, previous.clone());
+        previous = fiboTuple.1;
+        let fiboNum = previous.get(&fiboN).expect("Error al obtener la variable");
+        println!("El número de fibonacci en la posición {fiboN} es {fiboNum}");
+    }
     
-    let fiboN: u128 =  fiboN.trim().parse().expect("Por favor, introduzca un número");
-
-    let previous = HashMap::new();
-    let fiboTuple: (u128, HashMap<u128,u128>)  = fibo(fiboN, previous);
-    let fiboNum = fiboTuple.1.get(&fiboN).expect("Error al obtener la variable");
-    println!("El número de fibonacci en la posición {fiboN} es {fiboNum}");
-
+    
 }
 
 fn fibo(n: u128, previous: HashMap<u128,u128> ) -> (u128, HashMap<u128, u128>){
-    if n > 2{
+    if n <= 2{
+        // Set first two numbers
+        let mut initialMap: HashMap<u128, u128> = HashMap::new();
+        initialMap.insert(1, 1);
+        initialMap.insert(2, 1);
+        return (1, initialMap);
+    } else {
         if previous.contains_key(&n){
             return (n, previous);
-        } else{
+        } else {
             let fN2 = fibo(n-2, previous);
             let fN1 = fibo(n-1, fN2.1);
             let fN: u128 = fN1.1.get(&(n-1)).expect("No existe el elemento") + fN1.1.get(&(n-2)).expect("No existe el elemento");
@@ -80,11 +83,5 @@ fn fibo(n: u128, previous: HashMap<u128,u128> ) -> (u128, HashMap<u128, u128>){
             previous.insert(n, fN);
             return (n, previous);
         }
-
-    } else {
-        let mut initialMap: HashMap<u128, u128> = HashMap::new();
-        initialMap.insert(1, 1);
-        initialMap.insert(2, 1);
-        return (1, initialMap);
     }
 }
