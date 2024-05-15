@@ -1,8 +1,18 @@
-fn area(dimensions :(u64, u64)) -> u64 {
-    dimensions.0 * dimensions.1
+#[derive(Debug)]
+struct Rectangle{
+    width : u64,
+    height : u64
+}
+
+fn area(rectangle : &Rectangle) -> u64 {
+    rectangle.height * rectangle.width
 }
 
 fn main() {
-    let dimensions = (10,5);
-    println!("The area of a rectangle of dimensions {}x{} is {}", dimensions.0, dimensions.1, area(dimensions))
+    let rectangle = Rectangle{
+        width : 10, 
+        height: 5
+    };
+
+    println!("The area of {:#?} is {}", rectangle, area(&rectangle))
 }
