@@ -1,10 +1,8 @@
-fn area(width: u64, height: u64) -> u64 {
-    width * height
+fn area(dimensions :(u64, u64)) -> u64 {
+    dimensions.0 * dimensions.1
 }
 
 fn main() {
-    let width : u64 = 5;
-    let height : u64 = 10;
-
-    println!("The area of a rectangle of dimensions {}x{} is {}", height, width, area(height, width))
+    let dimensions = (10,5);
+    println!("The area of a rectangle of dimensions {}x{} is {}", dimensions.0, dimensions.1, area(dimensions))
 }
