@@ -10,55 +10,7 @@ enum Coin{
 #[derive(Debug)]
 enum UsState {
     Alaska,
-    Texas,
-    California,
-    Montana,
-    NewMexico,
-    Arizona,
-    Nevada,
-    Colorado,
-    Oregon,
-    Wyoming,
-    Michigan,
-    Minnesota,
-    Utah,
-    Idaho,
-    Kansas,
-    Nebraska,
-    SouthDakota,
-    Washington,
-    NorthDakota,
-    Florida,
-    Oklahoma,
-    Missouri,
-    Georgia,
-    Wisconsin,
-    Illinois,
-    Iowa,
-    NewYork,
-    NorthCarolina,
-    Virginia,
-    Arkansas,
-    Alabama,
-    Louisiana,
-    Mississippi,
-    Pennsylvania,
-    Ohio,
-    Tennessee,
-    Kentucky,
-    Maine,
-    Indiana,
-    SouthCarolina,
-    WestVirginia,
-    Maryland,
-    Hawaii,
-    Massachusetts,
-    Vermont,
-    NewHampshire,
-    NewJersey,
-    Connecticut,
-    Delaware,
-    RhodeIsland
+    Texas
 }
 
 fn value_in_cents(coin : &Coin) -> u8{
@@ -77,8 +29,23 @@ fn value_in_cents(coin : &Coin) -> u8{
     }
 }
 
+fn add_1(value : Option<i32>) -> Option<i32>{
+    match value {
+        None => None,
+        Some(number) => Some(number+1)
+    }
+
+}
+
 fn main() {
-    let coin : Coin = Coin::Quarter(UsState::Alabama);
+    let coin : Coin = Coin::Quarter(UsState::Alaska);
     let value = value_in_cents(&coin);
-    println!("The value in cents of a {coin:?} is {value}")
+    println!("The value in cents of a {coin:?} is {value}");
+
+    // Add one to value if exists
+    let x = Some(5);
+    let x1 = add_1(x);
+    let x2 = add_1(None);
+
+    println!("Some(5)+1 = {x1:?}, None + 1 = {x2:?}")
 }
