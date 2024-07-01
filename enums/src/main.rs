@@ -1,3 +1,7 @@
+#![allow(dead_code)]
+
+use rand::Rng;
+
 #[derive(Debug)]
 enum Coin{
     Penny,
@@ -37,6 +41,10 @@ fn add_1(value : Option<i32>) -> Option<i32>{
 
 }
 
+fn roll_dice() -> u8 {
+    rand::thread_rng().gen_range(1..8)
+}
+
 fn main() {
     let coin : Coin = Coin::Quarter(UsState::Alaska);
     let value = value_in_cents(&coin);
@@ -47,5 +55,24 @@ fn main() {
     let x1 = add_1(x);
     let x2 = add_1(None);
 
-    println!("Some(5)+1 = {x1:?}, None + 1 = {x2:?}")
+    println!("Some(5)+1 = {x1:?}, None + 1 = {x2:?}");
+    
+    // Loop will only break when dice rolls 3 or 7
+    loop {
+        let dice_roll  = roll_dice();
+
+        match dice_roll {
+            3 => {
+                println!("You got a cool hat!");
+                break
+            
+            }
+            7 => {
+                println!("You lost a cool hat...");
+                break
+            }
+            _ => println!("Roll again!")
+        }        
+    }
+
 }
